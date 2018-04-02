@@ -76,6 +76,22 @@ public class GitFlowVersionInfo extends DefaultVersionInfo {
      * @return Next SNAPSHOT version.
      */
     public String nextSnapshotVersion(final Integer index) {
+        return nextVersion(index, true);
+    }
+
+    /**
+     * Gets next release version. If index is <code>null</code> or not valid then it
+     * delegates to {@link #getNextVersion()} method.
+     * 
+     * @param index
+     *            Which part of version to increment.
+     * @return Next release version.
+     */
+    public String nextReleaseVersion(final Integer index) {
+        return nextVersion(index, false);
+    }
+
+    private String nextVersion(final Integer index, boolean snapshot) {
         List<String> digits = getDigits();
 
         String nextVersion = null;
@@ -83,20 +99,19 @@ public class GitFlowVersionInfo extends DefaultVersionInfo {
         if (digits != null) {
             if (index != null && index >= 0 && index < digits.size()) {
                 int origDigitsLength = joinDigitString(digits).length();
-                digits.set(index,
-                        incrementVersionString((String) digits.get(index)));
+                digits.set(index, incrementVersionString((String) digits.get(index)));
                 for (int i = index + 1; i < digits.size(); i++) {
                     digits.set(i, "0");
                 }
                 String digitsStr = joinDigitString(digits);
-                nextVersion = digitsStr
-                        + getSnapshotVersionString()
-                                .substring(origDigitsLength);
+                nextVersion = digitsStr + (snapshot ? getSnapshotVersionString().substring(origDigitsLength)
+                        : getReleaseVersionString().substring(origDigitsLength));
             } else {
-                nextVersion = getNextVersion().getSnapshotVersionString();
+                nextVersion = snapshot ? getNextVersion().getSnapshotVersionString()
+                        : getNextVersion().getReleaseVersionString();
             }
         } else {
-            nextVersion = getSnapshotVersionString();
+            nextVersion = snapshot ? getSnapshotVersionString() : getReleaseVersionString();
         }
         return nextVersion;
     }

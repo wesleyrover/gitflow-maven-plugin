@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2019 Aleksandr Mashchenko.
+ * Copyright 2014-2020 Aleksandr Mashchenko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,6 +52,8 @@ public class CommitMessages {
     private String updateReleaseToAvoidConflictsMessage;
     private String updateReleaseBackPreMergeStateMessage;
 
+    private String updateFeatureBackMessage;
+
     public CommitMessages() {
         featureStartMessage = "Update versions for feature branch";
         featureFinishMessage = "Update versions for development branch";
@@ -77,6 +79,8 @@ public class CommitMessages {
 
         updateReleaseToAvoidConflictsMessage = "Update release to hotfix version to avoid merge conflicts";
         updateReleaseBackPreMergeStateMessage = "Update release version back to pre-merge state";
+
+        updateFeatureBackMessage = "Update feature branch back to feature version";
     }
 
     /**
@@ -386,5 +390,20 @@ public class CommitMessages {
      */
     public void setFeatureFinishDevMergeMessage(String featureFinishDevMergeMessage) {
         this.featureFinishDevMergeMessage = featureFinishDevMergeMessage;
+    }
+
+    /**
+     * @return the updateFeatureBackMessage
+     */
+    public String getUpdateFeatureBackMessage() {
+        return updateFeatureBackMessage;
+    }
+
+    /**
+     * @param updateFeatureBackMessage
+     *            the updateFeatureBackMessage to set
+     */
+    public void setUpdateFeatureBackMessage(String updateFeatureBackMessage) {
+        this.updateFeatureBackMessage = updateFeatureBackMessage;
     }
 }

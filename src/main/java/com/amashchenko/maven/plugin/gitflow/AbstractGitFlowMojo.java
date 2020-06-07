@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2019 Aleksandr Mashchenko.
+ * Copyright 2014-2020 Aleksandr Mashchenko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -521,6 +521,19 @@ public abstract class AbstractGitFlowMojo extends AbstractMojo {
             str = str.replaceAll("\"", "");
         }
         return str;
+    }
+
+    /**
+     * Gets the current branch name.
+     * 
+     * @return Current branch name.
+     * @throws MojoFailureException
+     * @throws CommandLineException
+     */
+    protected String gitCurrentBranch() throws MojoFailureException, CommandLineException {
+        String name = executeGitCommandReturn("symbolic-ref", "-q", "--short", "HEAD");
+        name = StringUtils.strip(name);
+        return name;
     }
 
     /**
